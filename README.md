@@ -15,6 +15,6 @@ Open `index.html` in a browser.
 
 ## Customize
 
-- Replace `hello@brothersbeyondaddiction.org` in `index.html` with the real contact email.
+- The contact email is currently set to `brotherbeyondaddiction@gmail.com`.
 - Update section copy, programs, and organization details as needed.
 - Add real crisis/support resources if the organization has preferred local partners.

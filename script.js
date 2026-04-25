@@ -1,6 +1,7 @@
 const navToggle = document.querySelector("[data-nav-toggle]");
 const nav = document.querySelector("[data-nav]");
 const header = document.querySelector("[data-header]");
+const revealElements = document.querySelectorAll(".reveal");
 
 if (navToggle && nav) {
   navToggle.addEventListener("click", () => {
@@ -14,6 +15,13 @@ if (navToggle && nav) {
       navToggle.setAttribute("aria-expanded", "false");
     }
   });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      nav.classList.remove("is-open");
+      navToggle.setAttribute("aria-expanded", "false");
+    }
+  });
 }
 
 if (header) {
@@ -22,18 +30,20 @@ if (header) {
   });
 }
 
-const revealElements = document.querySelectorAll(".reveal");
+if ("IntersectionObserver" in window) {
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.14 }
+  );
 
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-visible");
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.14 }
-);
-
-revealElements.forEach((element) => revealObserver.observe(element));
+  revealElements.forEach((element) => revealObserver.observe(element));
+} else {
+  revealElements.forEach((element) => element.classList.add("is-visible"));
+}
